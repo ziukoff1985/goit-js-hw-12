@@ -4,19 +4,36 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vanilla App Template</title>
+    <title>goit-js-hw-12</title>
     <link rel="stylesheet" href="./css/styles.css" />
   </head>
   <body>
-    <load src="./partials/header.html" icon-path="img/sprite.svg#logo" />
-
+    <header class="header">
+      <!-- Внутрішній контейнер для центрування та організації елементів сторінки. -->
+      <div class="container">
+        <!-- Форма для пошуку зображень -->
+        <form class="form">
+          <!-- Поле вводу для введення пошукового запиту. Користувач вводить запит сюди. -->
+          <input
+            class="input"
+            type="text"
+            name="query"
+            placeholder="Search images..."
+          />
+          <!-- Кнопка для надсилання форми. Коли користувач натискає на неї, відправляється запит на сервер. -->
+          <button class="btn" type="submit">Search</button>
+        </form>
+        <span class="loader">Loading images, please wait...</span>
+        <!-- Список, який використовується для динамічного відображення зображень у галереї. Кожне зображення буде додаватись як <li> елемент. -->
+        <ul class="gallery"></ul>
+        <button class="btn load-more" type="button" hidden>LOAD MORE</button>
+        <span class="loader-extra">Loading images, please wait...</span>
+      </div>
+    </header>
     <main>
-      <!-- Loads the specified .html file -->
-      <load src="./partials/vite-promo.html" />
-      <load src="./partials/badges.html" />
+      <!-- Елемент span для відображення лоадера (індикатора завантаження), що з'являється під час очікування відповіді від сервера. -->
+      <!-- <span class="loader"></span> -->
     </main>
-
-    <load src="./partials/footer.html" />
 
     <script type="module" src="./main.js"></script>
   </body>
