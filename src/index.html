@@ -23,17 +23,17 @@
           <!-- Кнопка для надсилання форми. Коли користувач натискає на неї, відправляється запит на сервер. -->
           <button class="btn" type="submit">Search</button>
         </form>
+        <!-- Loader - при натисканні кнопки Search. -->
         <span class="loader">Loading images, please wait...</span>
         <!-- Список, який використовується для динамічного відображення зображень у галереї. Кожне зображення буде додаватись як <li> елемент. -->
         <ul class="gallery"></ul>
+        <!-- Кнопка для загрузки наступної сторінки зображень. При натисканні на неї, відправляється запит на сервер для сьорінки 2 і далі... -->
         <button class="btn load-more" type="button" hidden>LOAD MORE</button>
+        <!-- Loader - при натисканні Load More. -->
         <span class="loader-extra">Loading images, please wait...</span>
       </div>
     </header>
-    <main>
-      <!-- Елемент span для відображення лоадера (індикатора завантаження), що з'являється під час очікування відповіді від сервера. -->
-      <!-- <span class="loader"></span> -->
-    </main>
+    <main></main>
 
     <script type="module" src="./main.js"></script>
   </body>

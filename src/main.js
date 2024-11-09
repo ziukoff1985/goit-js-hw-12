@@ -1,6 +1,5 @@
 'use strict';
 
-import axios from 'axios';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 import SimpleLightbox from 'simplelightbox';
@@ -9,26 +8,30 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 import { fetchImages } from './js/pixabay-api';
 import { createMarkup } from './js/render-functions';
 
-let lightbox;
-let currentQuery = '';
-let currentPage = 1;
+let lightbox; // Змінна для створення екземпляру класу SimpleLightbox та для оновлення lightbox після завантаження зображень
+let currentQuery = ''; // Змінна для збереження поточного запиту користувача
+let currentPage = 1; // Змінна для початкового значення номеру сторінки
 let totalHits = 0; // Загальна кількість зображень, що відповідають запиту
 
-const gallery = document.querySelector('.gallery');
-const form = document.querySelector('.form');
-const input = document.querySelector('.input');
-const loader = document.querySelector('.loader');
-const loaderExtra = document.querySelector('.loader-extra');
+const gallery = document.querySelector('.gallery'); // Галерея
+const form = document.querySelector('.form'); // Форма
+const input = document.querySelector('.input'); // Текстове поле вводу
+const loader = document.querySelector('.loader'); // Лоадер (кнопка Search)
+const loaderExtra = document.querySelector('.loader-extra'); // Лоадер (кнопка Load more)
 const loadMoreButton = document.querySelector('.load-more'); // Кнопка "Load more"
 
-// Ховаємо кнопку "Load more" на старті
+// Ховаємо кнопку перед завантаженням
 loadMoreButton.style.display = 'none';
 
+// Слухачі події для форми та кнопки "Load more"
 form.addEventListener('submit', handleSubmit);
 loadMoreButton.addEventListener('click', loadMoreImages);
 
+// Функція для обробки події Submit на формі
 async function handleSubmit(event) {
   event.preventDefault();
+
+  gallery.innerHTML = '';
 
   currentQuery = input.value.trim();
   currentPage = 1; // Скидаємо значення сторінки для нового пошуку
@@ -88,9 +91,6 @@ async function handleSubmit(event) {
     } else {
       loadMoreButton.style.display = 'block'; // Показуємо кнопку "Load more"
     }
-
-    // Прокрутка сторінки після завантаження нових зображень
-    // scrollPage();
   } catch (error) {
     loader.style.display = 'none';
     iziToast.error({
@@ -102,8 +102,9 @@ async function handleSubmit(event) {
   }
 }
 
+// Функція для обробки події "click" на кнопці "Load More"
 async function loadMoreImages() {
-  currentPage += 1; // Збільшуємо номер сторінки для наступного завантаження
+  currentPage += 1; // Перехід до наступної сторінки
 
   loaderExtra.style.display = 'block';
   loadMoreButton.style.display = 'none';
@@ -123,8 +124,8 @@ async function loadMoreImages() {
       return;
     }
 
-    createMarkup(response.hits);
-    scrollPage();
+    createMarkup(response.hits); // Додаємо нову розмітку для додаткових зображень
+    scrollPage(); // Плавний scroll на 2 висоти зображення
     // Перевірка на кінець колекції
     const totalPages = Math.ceil(totalHits / 15); // Загальна кількість сторінок
     if (currentPage >= totalPages) {
@@ -144,8 +145,6 @@ async function loadMoreImages() {
     if (lightbox) {
       lightbox.refresh();
     }
-
-    // Прокрутка сторінки після завантаження нових зображень
   } catch (error) {
     loader.style.display = 'none';
     loadMoreButton.style.display = 'block'; // Показуємо кнопку, щоб користувач міг спробувати знову
@@ -158,18 +157,18 @@ async function loadMoreImages() {
   }
 }
 
+// Функція для реалізація плавного скролу
 function scrollPage() {
-  const galleryItem = gallery.querySelector('.gallery-item:last-child');
+  const galleryItem = gallery.querySelector('.gallery-item');
 
-  if (!galleryItem) return;
+  if (!galleryItem) return; // Перевіряємо наявність елемента, щоб уникнути помилки
 
-  const cardHeight = galleryItem.getBoundingClientRect().height; // Висота останньої картки
-
-  console.log(cardHeight); // Перевіряємо висоту картки
+  const cardHeight = galleryItem.getBoundingClientRect().height; // Висота картки
 
   // Прокручуємо на дві висоти картки
   window.scrollBy({
-    top: cardHeight * 2, // Прокрутка на дві висоти картки
-    behavior: 'smooth', // Плавна прокрутка
+    left: 0,
+    top: cardHeight * 2,
+    behavior: 'smooth',
   });
 }

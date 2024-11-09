@@ -2,6 +2,7 @@
 
 const gallery = document.querySelector('.gallery');
 
+// Функція 'createMarkup' (приймає масив) створює динамічну розмітку зображень, на основі отриманих даних. Імпортується і використовується в файлі main.js
 export function createMarkup(arrImages) {
   const markup = arrImages
     .map(image => {
@@ -10,7 +11,7 @@ export function createMarkup(arrImages) {
 		<img 
 			class="gallery-image" 
 			src="${image.webformatURL}" 
-			alt="${image.tags}" 
+			alt="${image.tags}" loading="lazy" 
 			/>
         <div class="gallery-info">
         <p class="gallery-likes"><span>Likes:</span> ${image.likes}</p>
@@ -22,9 +23,7 @@ export function createMarkup(arrImages) {
     </li>
     `;
     })
-    .join('');
+    .join(''); // Перетворюємо масив рядків у єдину розмітку
 
-  // gallery.innerHTML = '';
-
-  gallery.insertAdjacentHTML('beforeend', markup);
+  gallery.insertAdjacentHTML('beforeend', markup); // Додаємо розмітку до галереї
 }
