@@ -1,11 +1,14 @@
 'use strict';
 
+// Оголошуємо змінну для доступу до контейнера галереї на сторінці
 const gallery = document.querySelector('.gallery');
 
-// Функція 'createMarkup' (приймає масив) створює динамічну розмітку зображень, на основі отриманих даних. Імпортується і використовується в файлі main.js
+/// Функція 'createMarkup' приймає масив об'єктів із зображеннями і створює динамічну HTML розмітку для галереї. Імпортується і використовується в файлі main.js
 export function createMarkup(arrImages) {
+  // Використовуємо метод .map() для створення HTML рядків для кожного зображення
   const markup = arrImages
     .map(image => {
+      // Формуємо HTML для кожного зображення
       return `<li class="gallery-item">
 	  <a class="gallery-link" href="${image.largeImageURL}">
 		<img 
@@ -23,7 +26,8 @@ export function createMarkup(arrImages) {
     </li>
     `;
     })
-    .join(''); // Перетворюємо масив рядків у єдину розмітку
+    .join(''); // Перетворюємо масив рядків на одну строку HTML
 
-  gallery.insertAdjacentHTML('beforeend', markup); // Додаємо розмітку до галереї
+  // Додаємо створену розмітку в кінець контейнера галереї на сторінці
+  gallery.insertAdjacentHTML('beforeend', markup);
 }
